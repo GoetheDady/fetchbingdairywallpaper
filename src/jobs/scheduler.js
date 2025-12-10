@@ -3,10 +3,10 @@ const wallpaperService = require('../services/wallpaperService');
 const imageProcessService = require('../services/imageProcessService');
 
 /**
- * 定时任务：每 3 分钟执行一次 - 获取壁纸
+ * 定时任务：每 12 小时执行一次 - 获取壁纸
  */
 const wallpaperTask = cron.schedule(
-  '*/3 * * * *', // Cron 表达式: 每 3 分钟
+  '0 */12 * * *', // Cron 表达式: 每 12 小时（每天 0:00 和 12:00）
   async () => {
     console.log('\n==========================================');
     console.log('⏰ 壁纸获取任务触发 - ' + new Date().toLocaleString('zh-CN'));
@@ -33,10 +33,10 @@ const wallpaperTask = cron.schedule(
 );
 
 /**
- * 定时任务：每 10 分钟清理一次缓存
+ * 定时任务：每 6 小时清理一次缓存
  */
 const cacheClearTask = cron.schedule(
-  '*/10 * * * *', // Cron 表达式: 每 10 分钟
+  '0 */6 * * *', // Cron 表达式: 每 6 小时（每天 0:00、6:00、12:00、18:00）
   async () => {
     console.log('\n==========================================');
     console.log('🧹 缓存清理任务触发 - ' + new Date().toLocaleString('zh-CN'));
@@ -66,11 +66,11 @@ const start = () => {
   
   // 启动壁纸获取任务
   wallpaperTask.start();
-  console.log('✅ 壁纸获取任务已启动（每 3 分钟）');
+  console.log('✅ 壁纸获取任务已启动（每 12 小时：0:00 和 12:00）');
   
   // 启动缓存清理任务
   cacheClearTask.start();
-  console.log('✅ 缓存清理任务已启动（每 10 分钟）');
+  console.log('✅ 缓存清理任务已启动（每 6 小时：0:00、6:00、12:00、18:00）');
   
   console.log('');
   
