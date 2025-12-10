@@ -5,7 +5,9 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
+    "start:4000": "node src/app.js --port 4000",
     "dev": "nodemon src/app.js",
+    "dev:4000": "nodemon src/app.js --port 4000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

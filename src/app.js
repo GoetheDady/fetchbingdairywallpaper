@@ -7,9 +7,31 @@ const scheduler = require('./jobs/scheduler');
 // 加载环境变量
 dotenv.config();
 
+// 解析命令行参数获取端口号
+const getPortFromArgs = () => {
+  const args = process.argv.slice(2);
+  
+  // 支持格式：--port 4000 或 -p 4000
+  const portIndex = args.findIndex(arg => arg === '--port' || arg === '-p');
+  if (portIndex !== -1 && args[portIndex + 1]) {
+    const port = parseInt(args[portIndex + 1]);
+    if (!isNaN(port)) return port;
+  }
+  
+  // 支持格式：直接传递数字 4000
+  const numericArg = args.find(arg => /^\d+$/.test(arg));
+  if (numericArg) {
+    const port = parseInt(numericArg);
+    if (!isNaN(port)) return port;
+  }
+  
+  return null;
+};
+
 // 创建 Express 应用
 const app = express();
-const PORT = process.env.PORT || 3000;
+// 端口优先级：命令行参数 > 环境变量 > 默认值
+const PORT = getPortFromArgs() || process.env.PORT || 3000;
 
 // 中间件
 app.use(cors());
