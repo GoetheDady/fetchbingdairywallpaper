@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const dayjs = require('dayjs');
 const routes = require('./routes');
 const scheduler = require('./jobs/scheduler');
 
@@ -49,7 +50,7 @@ app.get('/health', (req, res) => {
   res.json({ 
     status: 'ok', 
     message: '服务运行正常',
-    timestamp: new Date().toISOString()
+    timestamp: dayjs().format()
   });
 });
 

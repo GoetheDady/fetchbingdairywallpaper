@@ -1,4 +1,5 @@
 const cron = require('node-cron');
+const dayjs = require('dayjs');
 const wallpaperService = require('../services/wallpaperService');
 const imageProcessService = require('../services/imageProcessService');
 
@@ -9,7 +10,7 @@ const wallpaperTask = cron.schedule(
   '0 */12 * * *', // Cron 表达式: 每 12 小时（每天 0:00 和 12:00）
   async () => {
     console.log('\n==========================================');
-    console.log('⏰ 壁纸获取任务触发 - ' + new Date().toLocaleString('zh-CN'));
+    console.log('⏰ 壁纸获取任务触发 - ' + dayjs().format('YYYY-MM-DD HH:mm:ss'));
     console.log('==========================================');
     
     try {
@@ -39,7 +40,7 @@ const cacheClearTask = cron.schedule(
   '0 */6 * * *', // Cron 表达式: 每 6 小时（每天 0:00、6:00、12:00、18:00）
   async () => {
     console.log('\n==========================================');
-    console.log('🧹 缓存清理任务触发 - ' + new Date().toLocaleString('zh-CN'));
+    console.log('🧹 缓存清理任务触发 - ' + dayjs().format('YYYY-MM-DD HH:mm:ss'));
     console.log('==========================================');
     
     try {

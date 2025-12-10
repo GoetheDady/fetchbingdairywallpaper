@@ -2,6 +2,7 @@ const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const dayjs = require('dayjs');
 
 // 目录配置
 const IMAGES_DIR = path.join(__dirname, '../../images');
@@ -24,15 +25,16 @@ const hasTodayWallpaper = () => {
   try {
     const files = fs.readdirSync(IMAGES_DIR);
     const imageFiles = files.filter(file => file.endsWith('_UHD.jpg'));
-    
+    console.log('🐷', files, imageFiles)
     if (imageFiles.length === 0) {
       return false;
     }
     
     // 检查是否是今天的日期
-    const today = new Date().toISOString().slice(0, 10).replace(/-/g, ''); // YYYYMMDD
+    const today = dayjs().format('YYYYMMDD');
     const todayFile = `${today}_UHD.jpg`;
-    
+    console.log('🐷', todayFile)
+    console.log('🐷', files.includes(todayFile))
     return files.includes(todayFile);
   } catch (error) {
     return false;
