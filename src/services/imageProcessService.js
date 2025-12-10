@@ -25,16 +25,15 @@ const hasTodayWallpaper = () => {
   try {
     const files = fs.readdirSync(IMAGES_DIR);
     const imageFiles = files.filter(file => file.endsWith('_UHD.jpg'));
-    console.log('🐷', files, imageFiles)
+    
     if (imageFiles.length === 0) {
       return false;
     }
     
-    // 检查是否是今天的日期
+    // 使用 dayjs 获取当天日期
     const today = dayjs().format('YYYYMMDD');
     const todayFile = `${today}_UHD.jpg`;
-    console.log('🐷', todayFile)
-    console.log('🐷', files.includes(todayFile))
+    
     return files.includes(todayFile);
   } catch (error) {
     return false;
@@ -45,7 +44,7 @@ const hasTodayWallpaper = () => {
  * 获取当前最新的壁纸文件
  */
 const getCurrentWallpaper = async () => {
-  // 检查是否有当天的图片
+  // 检查是否有当天的壁纸图片
   if (!hasTodayWallpaper()) {
     console.log('⚠️  未找到当天壁纸，开始获取...');
     

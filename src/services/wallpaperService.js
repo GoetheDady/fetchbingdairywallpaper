@@ -2,6 +2,7 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 const { pipeline } = require('stream/promises');
+const dayjs = require('dayjs');
 
 // 图片保存目录
 const IMAGES_DIR = path.join(__dirname, '../../images');
@@ -115,18 +116,21 @@ const fetchBingWallpaper = async (params = {}) => {
     if (response.data && response.data.images && response.data.images.length > 0) {
       const firstImage = response.data.images[0];
       const urlbase = firstImage.urlbase;
-      const currentDate = firstImage.startdate;
+      
+      // 使用本地日期（dayjs）而不是 Bing API 返回的日期，避免时区问题
+      const currentDate = dayjs().format('YYYYMMDD');
       
       // 拼接完整的图片 URL
       const imageUrl = `https://cn.bing.com${urlbase}_UHD.jpg`;
       
-      // 生成文件名（使用日期）
+      // 生成文件名（使用本地日期）
       const filename = `${currentDate}_UHD.jpg`;
       const filepath = path.join(IMAGES_DIR, filename);
       
       console.log('\n📸 准备下载图片...');
       console.log('🏷️  文件名:', filename);
-      console.log('📅 日期:', currentDate);
+      console.log('📅 本地日期:', currentDate);
+      console.log('📅 Bing日期:', firstImage.startdate);
       
       // 检查当前日期的图片是否已存在
       if (fs.existsSync(filepath)) {
